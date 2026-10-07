@@ -21,3 +21,6 @@ showcase-vault/.obsidian/*
 
 # Machine-specific vault list for npm run sync
 vaults.local.txt
+
+# Ad-hoc screenshots dropped into the showcase vault
+showcase-vault/*.png

@@ -904,3 +904,17 @@ body.is-popout-window .app-container {
 body.is-popout-window .titlebar-text {
 	color: var(--text-muted);
 }
+
+/* Scrolling on a translucent window leaves ghost trails in Chromium when the scroller
+   paints straight onto the OS backdrop. Giving each scroller its own layer makes it
+   repaint cleanly. */
+body.is-translucent:not(.is-fullscreen, .is-popout-window) :is(
+	.mod-sidedock .view-content,
+	.mod-sidedock .workspace-leaf-content,
+	.mod-sidedock .nav-files-container,
+	.mod-root .cm-scroller,
+	.mod-root .markdown-preview-view
+) {
+	transform: translateZ(0);
+	backface-visibility: hidden;
+}
