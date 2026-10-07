@@ -235,7 +235,7 @@ body.theme-light {
 	--inlay-border: var(--color-base-30);
 	--inlay-divider: var(--color-base-35);
 	--inlay-guide: color-mix(in oklch, var(--mono-100) 12%, transparent);
-	--inlay-card-shadow: 0 0 0 1px rgb(0 0 0 / 6%), 0 1px 2px rgb(0 0 0 / 4%), 0 4px 16px rgb(0 0 0 / 7%);
+	--inlay-card-shadow: 0 0 0 1px var(--inlay-border), 0 1px 2px rgb(0 0 0 / 4%), 0 4px 16px rgb(0 0 0 / 7%);
 	--inlay-raise: 0 0 0 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%);
 	--inlay-float: 0 0 0 1px rgb(0 0 0 / 6%), 0 2px 8px rgb(0 0 0 / 6%);
 	--inlay-pop: 0 0 0 1px rgb(0 0 0 / 7%), 0 10px 28px rgb(0 0 0 / 12%), 0 2px 6px rgb(0 0 0 / 5%);
@@ -258,7 +258,7 @@ body.theme-dark {
 	--inlay-border: var(--color-base-30);
 	--inlay-divider: var(--color-base-35);
 	--inlay-guide: color-mix(in oklch, var(--mono-100) 12%, transparent);
-	--inlay-card-shadow: 0 0 0 1px rgb(0 0 0 / 35%), 0 4px 16px rgb(0 0 0 / 35%);
+	--inlay-card-shadow: 0 0 0 1px var(--inlay-border), 0 4px 16px rgb(0 0 0 / 35%);
 	--inlay-raise: 0 0 0 1px rgb(255 255 255 / 6%), 0 1px 2px rgb(0 0 0 / 30%);
 	--inlay-float: 0 0 0 1px rgb(255 255 255 / 7%), 0 4px 12px rgb(0 0 0 / 35%);
 	--inlay-pop: 0 0 0 1px rgb(255 255 255 / 8%), 0 16px 40px rgb(0 0 0 / 50%);
@@ -308,6 +308,7 @@ body.theme-dark {
 	--tab-container-background: var(--inlay-chrome);
 	--sidebar-tab-container-background: var(--inlay-chrome);
 	--file-header-border: none;
+	--tab-outline-color: var(--inlay-border);
 	--nav-item-background-hover: var(--inlay-hover);
 	--nav-item-background-active: var(--inlay-active);
 	--nav-indentation-guide-color: var(--inlay-guide);
@@ -360,7 +361,17 @@ body:not(.inlay-flat, .is-mobile) .workspace > .mod-root {
 .workspace .mod-sidedock .workspace-tab-header-container,
 .workspace .sidebar-toggle-button {
 	background-color: var(--inlay-chrome) !important;
+}
+
+.workspace-split.mod-sidedock,
+.workspace-split.mod-root,
+.workspace .sidebar-toggle-button {
 	border: none;
+}
+
+/* the right sidebar has no card under it, so no top edge either */
+.workspace .mod-secondary-split .workspace-tab-header-container {
+	border-bottom: none;
 }
 
 /* card surfaces */
@@ -431,7 +442,7 @@ body:not(.inlay-hide-ring, .inlay-flat, .is-mobile) .workspace::after {
 	border-radius: var(--inlay-card-radius);
 	box-shadow: var(--inlay-card-shadow);
 	z-index: 30;
-	will-change: transform;
+	clip-path: inset(0 -64px -64px -64px);
 }
 
 body:not(.inlay-hide-ring, .inlay-flat, .is-mobile, .show-ribbon) .workspace::after {
@@ -862,6 +873,16 @@ body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markd
 	pointer-events: none;
 	opacity: var(--inlay-glass-grain);
 	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* rounded card corners also on the glass header (backdrop blur ignores the parent's clip) */
+body:not(.inlay-solid-header, .inlay-flat) .mod-root > .workspace-tabs:not(:has(~ .workspace-tabs, ~ .workspace-split)) .view-header,
+body:not(.inlay-solid-header, .inlay-flat) .mod-root > .workspace-split:not(:has(~ .workspace-tabs, ~ .workspace-split)) > .workspace-tabs.mod-top .view-header {
+	border-start-end-radius: var(--inlay-card-radius);
+}
+
+body:not(.inlay-solid-header, .inlay-flat) .workspace:not(.is-left-sidedock-open) .mod-root .workspace-tabs.mod-top-left-space .view-header {
+	border-start-start-radius: var(--inlay-card-radius);
 }
 
 /* keep the first line clear of the header – only the start of the scroll area moves */
