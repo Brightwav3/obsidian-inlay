@@ -183,7 +183,7 @@ settings:
   -
     id: inlay-h-header
     title: Skleněná hlavička poznámky
-    description: Lišta s cestou a názvem souboru nad poznámkou. Text pod ní při scrollování projíždí rozmazaný. Zamlžení a zrnitost bere ze sekce Průsvitné okno. Funguje i bez průsvitného okna.
+    description: Lišta s cestou a názvem souboru nad poznámkou. Text pod ní při scrollování projíždí rozmazaný. Zamlžení a zrnitost bere ze sekce Průsvitné okno. S průsvitným oknem se vypne – rozmazání uvnitř průsvitného okna rozbíjí vykreslování při scrollování.
     type: heading
     level: 2
     collapsed: true
@@ -859,7 +859,7 @@ body.is-translucent:not(.is-fullscreen, .is-popout-window) .mod-primary-split :i
    ========================================================================== */
 
 /* the header floats over the note; the note scrolls underneath it */
-body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header {
+body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -873,7 +873,7 @@ body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markd
 }
 
 /* same frosted grain as the shell */
-body.inlay-glass-grain-on:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header::before {
+body.inlay-glass-grain-on:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -894,8 +894,8 @@ body:not(.inlay-solid-header, .inlay-flat) .workspace:not(.is-left-sidedock-open
 }
 
 /* keep the first line clear of the header – only the start of the scroll area moves */
-body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content > .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller,
-body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content .markdown-reading-view > .markdown-preview-view {
+body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content > .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller,
+body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content .markdown-reading-view > .markdown-preview-view {
 	padding-top: calc(var(--file-margins-y) + var(--header-height));
 	scroll-padding-top: var(--header-height);
 }
