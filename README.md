@@ -2,6 +2,10 @@
 
 An Obsidian theme where the workspace is a single card **inlaid** in a neutral shell.
 
+![Inlay – light](screenshots/light.png)
+
+![Inlay – dark](screenshots/dark.png)
+
 - The editor and the left sidebar sit on one floating card with a soft shadow.
 - The ribbon, title bar and right sidebar rest on the shell around it.
 - Active tabs are raised pills. Right-sidebar tabs form a segmented control.
@@ -47,7 +51,7 @@ ln -s ~/Projects/obsidian-inlay "<vault>/.obsidian/themes/Inlay"
 2. Commit, then push a tag that matches the version, for example `git tag 0.2.0 && git push --tags`.
 3. The release workflow creates a draft GitHub release with `manifest.json` and `theme.css`.
 
-Add a 512×288 (16:9) screenshot to `screenshots/` before submitting to the community directory.
+`screenshots/screenshot.png` (512×288) is the community directory thumbnail. To retake screenshots, open `showcase-vault/` as a vault. It already uses Inlay through a symlink to this repository.
 
 ## License
 

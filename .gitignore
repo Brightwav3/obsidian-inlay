@@ -13,3 +13,9 @@ node_modules
 
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
+
+# Showcase vault: keep content and appearance, not per-machine state
+showcase-vault/.obsidian/*
+!showcase-vault/.obsidian/appearance.json
+!showcase-vault/.obsidian/app.json
+!showcase-vault/.obsidian/themes
