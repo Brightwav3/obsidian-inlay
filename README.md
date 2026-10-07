@@ -27,7 +27,8 @@ Most themes restyle everything. Inlay changes **one idea**: your notes sit on a 
 - **Default where it matters.** Fonts, sizes, spacing and the rendering of your notes (editor, reading view, properties, callouts, code) are untouched.
 - **Obsidian's own palette.** Light and dark mode use the default colour scale, so plugins and snippets look the way they expect.
 - **Optional glass.** A translucent shell over the OS blur, and a frosted note header that text scrolls beneath.
-- **Details.** Curved file-tree guides, unified tab outline, matching pop-out windows.
+- **Details.** Curved file-tree guides, unified tab outline, pop-out windows with their own card.
+- **Mobile.** Drawers sit on the shell and the open note is the card.
 
 ## Screenshots
 
@@ -67,7 +68,7 @@ Install [Style Settings](https://github.com/mgmeyers/obsidian-style-settings), t
 | | |
 | --- | --- |
 | Obsidian | 1.14 or newer, desktop (tested on 1.14.4, macOS) |
-| Mobile | Layout falls back to the default edge-to-edge view |
+| Mobile | Phone and tablet: drawers rest on the shell, the open note is the card (rounded on tablets) |
 | Plugins | Style Settings (optional) · Iconize and other plugins that use Obsidian's variables work unchanged |
 
 ## Development

@@ -767,6 +767,27 @@ body.inlay-flat .workspace-split.mod-root {
 
 body.is-mobile {
 	--inlay-gap: 0px;
+
+	/* drawers rest on the shell; the open note is the card */
+	--mobile-sidebar-background: var(--inlay-chrome);
+}
+
+body.is-mobile .workspace-drawer {
+	--background-secondary: var(--inlay-chrome);
+	--background-modifier-hover: var(--inlay-hover-chrome);
+	--background-modifier-active-hover: var(--inlay-active-chrome);
+	--nav-item-background-hover: var(--inlay-hover-chrome);
+	--nav-item-background-active: var(--inlay-active-chrome);
+}
+
+body.is-mobile .workspace-drawer :is(.workspace-tab-container, .workspace-leaf, .view-content, .workspace-drawer-inner, .workspace-drawer-active-tab-container) {
+	background-color: var(--inlay-chrome);
+}
+
+/* the note card gets rounded corners where it meets the shell on tablets */
+body.is-tablet:not(.inlay-flat) .workspace > .mod-root {
+	border-radius: var(--inlay-card-radius) var(--inlay-card-radius) 0 0;
+	overflow: hidden;
 }
 
 /* ==========================================================================
@@ -859,7 +880,7 @@ body.is-translucent:not(.is-fullscreen, .is-popout-window) .mod-primary-split :i
    ========================================================================== */
 
 /* the header floats over the note; the note scrolls underneath it */
-body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header {
+body:not(.inlay-solid-header, .is-translucent, .is-mobile) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -873,7 +894,7 @@ body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content
 }
 
 /* same frosted grain as the shell */
-body.inlay-glass-grain-on:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header::before {
+body.inlay-glass-grain-on:not(.inlay-solid-header, .is-translucent, .is-mobile) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -884,18 +905,18 @@ body.inlay-glass-grain-on:not(.inlay-solid-header, .is-translucent) .mod-root .w
 }
 
 /* rounded card corners also on the glass header (backdrop blur ignores the parent's clip) */
-body:not(.inlay-solid-header, .inlay-flat) .mod-root > .workspace-tabs:not(:has(~ .workspace-tabs, ~ .workspace-split)) .view-header,
-body:not(.inlay-solid-header, .inlay-flat) .mod-root > .workspace-split:not(:has(~ .workspace-tabs, ~ .workspace-split)) > .workspace-tabs.mod-top .view-header {
+body:not(.inlay-solid-header, .is-translucent, .is-mobile, .inlay-flat) .mod-root > .workspace-tabs:not(:has(~ .workspace-tabs, ~ .workspace-split)) .view-header,
+body:not(.inlay-solid-header, .is-translucent, .is-mobile, .inlay-flat) .mod-root > .workspace-split:not(:has(~ .workspace-tabs, ~ .workspace-split)) > .workspace-tabs.mod-top .view-header {
 	border-start-end-radius: var(--inlay-card-radius);
 }
 
-body:not(.inlay-solid-header, .inlay-flat) .workspace:not(.is-left-sidedock-open) .mod-root .workspace-tabs.mod-top-left-space .view-header {
+body:not(.inlay-solid-header, .is-translucent, .is-mobile, .inlay-flat) .workspace:not(.is-left-sidedock-open) .mod-root .workspace-tabs.mod-top-left-space .view-header {
 	border-start-start-radius: var(--inlay-card-radius);
 }
 
 /* keep the first line clear of the header – only the start of the scroll area moves */
-body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content > .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller,
-body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content .markdown-reading-view > .markdown-preview-view {
+body:not(.inlay-solid-header, .is-translucent, .is-mobile) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content > .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller,
+body:not(.inlay-solid-header, .is-translucent, .is-mobile) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content .markdown-reading-view > .markdown-preview-view {
 	padding-top: calc(var(--file-margins-y) + var(--header-height));
 	scroll-padding-top: var(--header-height);
 }
@@ -903,6 +924,22 @@ body:not(.inlay-solid-header, .is-translucent) .mod-root .workspace-leaf-content
 /* ==========================================================================
    17. Pop-out windows
    ========================================================================== */
+
+/* a pop-out has no ribbon or sidebars: the card gets the same gap on every side */
+body.is-popout-window:not(.inlay-flat, .is-mobile) .workspace > .mod-root {
+	margin-inline-start: var(--inlay-gap);
+	border-radius: 0 0 var(--inlay-card-radius) var(--inlay-card-radius);
+}
+
+body.is-popout-window:not(.inlay-hide-ring, .inlay-flat, .is-mobile) .workspace::after {
+	inset-inline-start: var(--inlay-gap);
+}
+
+body.is-popout-window:not(.inlay-flat, .is-mobile) .mod-root .workspace-tabs.mod-top > .workspace-tab-container {
+	border-start-start-radius: var(--inlay-card-radius);
+	border-start-end-radius: var(--inlay-card-radius);
+	overflow: hidden;
+}
 
 body.is-popout-window .titlebar,
 body.is-popout-window .app-container {
