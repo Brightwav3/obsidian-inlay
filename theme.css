@@ -148,9 +148,14 @@ settings:
     default-light: '#ffffff'
     default-dark: '#000000'
   -
+    id: inlay-glass-grain-on
+    title: Zrnitost skla
+    description: Jemný šum přes sklo. V průsvitném okně může při scrollování způsobovat stopy.
+    type: class-toggle
+    default: false
+  -
     id: inlay-glass-grain
-    title: Zrnitost
-    description: Jemný šum přes sklo – dělá ho matnějším.
+    title: Síla zrnitosti
     type: variable-number-slider
     default: 0.05
     min: 0
@@ -784,11 +789,14 @@ body.is-translucent:not(.is-fullscreen, .is-popout-window) {
 
 body.is-translucent:not(.is-fullscreen, .is-popout-window) .app-container {
 	background-color: var(--inlay-glass) !important;
-	isolation: isolate;
 }
 
 /* frosted grain */
-body.is-translucent:not(.is-fullscreen, .is-popout-window) .app-container::before {
+body.inlay-glass-grain-on.is-translucent:not(.is-fullscreen, .is-popout-window) .app-container {
+	isolation: isolate;
+}
+
+body.inlay-glass-grain-on.is-translucent:not(.is-fullscreen, .is-popout-window) .app-container::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -865,7 +873,7 @@ body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markd
 }
 
 /* same frosted grain as the shell */
-body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header::before {
+body.inlay-glass-grain-on:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -903,18 +911,4 @@ body.is-popout-window .app-container {
 
 body.is-popout-window .titlebar-text {
 	color: var(--text-muted);
-}
-
-/* Scrolling on a translucent window leaves ghost trails in Chromium when the scroller
-   paints straight onto the OS backdrop. Giving each scroller its own layer makes it
-   repaint cleanly. */
-body.is-translucent:not(.is-fullscreen, .is-popout-window) :is(
-	.mod-sidedock .view-content,
-	.mod-sidedock .workspace-leaf-content,
-	.mod-sidedock .nav-files-container,
-	.mod-root .cm-scroller,
-	.mod-root .markdown-preview-view
-) {
-	transform: translateZ(0);
-	backface-visibility: hidden;
 }
