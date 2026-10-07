@@ -11,5 +11,10 @@
 		"stylelint-config-obsidianmd": "^0.1.0"
 	},
 	"description": "Inlay \u2014 an Obsidian theme: the workspace as one card inlaid in a neutral shell.",
-	"license": "MIT"
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Brightwav3/obsidian-inlay.git"
+	},
+	"author": "Simon Zelenkovi"
 }
