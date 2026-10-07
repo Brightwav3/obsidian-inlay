@@ -8,7 +8,7 @@ An Obsidian theme where the workspace is a single card **inlaid** in a neutral s
 
 - The editor and the left sidebar sit on one floating card with a soft shadow.
 - The ribbon, title bar and right sidebar rest on the shell around it.
-- Active tabs are raised pills. Right-sidebar tabs form a segmented control.
+- Active tabs are raised pills.
 - File explorer guides curve into each row.
 - Optional **glass**: a translucent shell over the OS blur and a frosted note header that text scrolls beneath.
 
@@ -22,7 +22,7 @@ Install [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) to
 | --- | --- |
 | Colours | Accent (theme or app accent), shell, card, left sidebar |
 | Layout | Flat mode, card gap, card radius, card shadow |
-| Tabs & sidebars | Close button on hover, segmented right tabs, curved/straight tree guides, auto-hide explorer buttons |
+| Tabs & sidebars | Close button on hover, curved/straight tree guides, auto-hide explorer buttons |
 | Translucent window | Shell opacity, frost amount and colour, grain, card and sidebar opacity |
 | Glass note header | Opacity, blur, saturation |
 
