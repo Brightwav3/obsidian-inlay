@@ -1,0 +1,14 @@
+{
+	"name": "obsidian-inlay-theme",
+	"version": "0.1.0",
+	"scripts": {
+		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"lint": "stylelint \"**/*.css\""
+	},
+	"devDependencies": {
+		"stylelint": "^17.0.0",
+		"stylelint-config-obsidianmd": "^0.1.0"
+	},
+	"description": "Inlay \u2014 an Obsidian theme: the workspace as one card inlaid in a neutral shell.",
+	"license": "MIT"
+}

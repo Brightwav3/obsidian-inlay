@@ -1,0 +1,54 @@
+# Inlay
+
+An Obsidian theme where the workspace is a single card **inlaid** in a neutral shell.
+
+- The editor and the left sidebar sit on one floating card with a soft shadow.
+- The ribbon, title bar and right sidebar rest on the shell around it.
+- Active tabs are raised pills. Right-sidebar tabs form a segmented control.
+- File explorer guides curve into each row.
+- Optional **glass**: a translucent shell over the OS blur and a frosted note header that text scrolls beneath.
+
+Inlay deliberately changes only colour, surfaces, layout and shape. Every dimension, all typography and the rendering of your notes (editor, reading view, properties) stay exactly as in Obsidian's default theme. The colour palette is Obsidian's own, in both light and dark mode.
+
+## Settings
+
+Install [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) to configure Inlay:
+
+| Section | Options |
+| --- | --- |
+| Colours | Accent (theme or app accent), shell, card, left sidebar |
+| Layout | Flat mode, card gap, card radius, card shadow |
+| Tabs & sidebars | Close button on hover, segmented right tabs, curved/straight tree guides, auto-hide explorer buttons |
+| Translucent window | Shell opacity, frost amount and colour, grain, card and sidebar opacity |
+| Glass note header | Opacity, blur, saturation |
+
+The translucent window needs **Settings → Appearance → Translucent window** (macOS / Windows). The blur behind the window comes from the operating system and can't be tuned by a theme. The note header's blur is in-app and fully adjustable.
+
+## Install manually
+
+Copy `manifest.json` and `theme.css` into `<vault>/.obsidian/themes/Inlay/`, then pick **Inlay** in **Settings → Appearance → Themes**.
+
+## Development
+
+```bash
+npm install
+npm run lint
+```
+
+To work on the theme live, symlink the repository into a vault:
+
+```bash
+ln -s ~/Projects/obsidian-inlay "<vault>/.obsidian/themes/Inlay"
+```
+
+### Releasing
+
+1. Bump `version` in `package.json` and run `npm run version`. This updates `manifest.json` and `versions.json`.
+2. Commit, then push a tag that matches the version, for example `git tag 0.2.0 && git push --tags`.
+3. The release workflow creates a draft GitHub release with `manifest.json` and `theme.css`.
+
+Add a 512×288 (16:9) screenshot to `screenshots/` before submitting to the community directory.
+
+## License
+
+[MIT](LICENSE)

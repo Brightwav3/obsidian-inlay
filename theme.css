@@ -1,0 +1,949 @@
+/*
+ * Inlay — an Obsidian theme
+ * Neutral shell, the workspace as one floating card with a soft shadow,
+ * the right sidebar resting on the shell beside it.
+ *
+ * Only colour, surfaces, layout and shape change. Every dimension (bar heights,
+ * ribbon width, icon/button/row sizes) and all typography stay Obsidian's defaults,
+ * and note content (editor, reading view, properties) is not touched.
+ */
+
+/* @settings
+
+name: Inlay
+id: inlay
+settings:
+  -
+    id: inlay-h-colors
+    title: Barvy
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: inlay-theme-accent
+    title: Použít akcent theme místo akcentu z nastavení Obsidianu
+    description: Zapnuto = barva níže. Vypnuto = akcent z Settings → Appearance.
+    type: class-toggle
+    default: false
+  -
+    id: inlay-accent
+    title: Akcent
+    type: variable-themed-color
+    opacity: false
+    format: hex
+    default-light: '#7c4dde'
+    default-dark: '#a58bf2'
+  -
+    id: inlay-chrome
+    title: Okno (rám kolem karty)
+    type: variable-themed-color
+    format: hex
+    default-light: '#f6f6f6'
+    default-dark: '#282828'
+  -
+    id: inlay-card
+    title: Karta (editor)
+    type: variable-themed-color
+    format: hex
+    default-light: '#ffffff'
+    default-dark: '#1c1c1c'
+  -
+    id: inlay-sidebar
+    title: Levý panel
+    type: variable-themed-color
+    format: hex
+    default-light: '#fafafa'
+    default-dark: '#232323'
+
+  -
+    id: inlay-h-layout
+    title: Rozvržení
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: inlay-flat
+    title: Plochý režim
+    description: Bez plovoucí karty – klasické rozvržení přes celé okno.
+    type: class-toggle
+    default: false
+  -
+    id: inlay-gap
+    title: Mezera kolem karty
+    type: variable-number-slider
+    default: 8
+    min: 0
+    max: 24
+    step: 1
+    format: px
+  -
+    id: inlay-card-radius
+    title: Zaoblení karty
+    type: variable-number-slider
+    default: 12
+    min: 0
+    max: 24
+    step: 1
+    format: px
+  -
+    id: inlay-hide-ring
+    title: Skrýt stín karty
+    type: class-toggle
+    default: false
+
+  -
+    id: inlay-h-tabs
+    title: Záložky a panely
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: inlay-tab-close-hover
+    title: Křížek záložky jen při najetí
+    type: class-toggle
+    default: false
+  -
+    id: inlay-plain-right-tabs
+    title: Pravý panel bez segmentového přepínače
+    type: class-toggle
+    default: false
+  -
+    id: inlay-straight-guides
+    title: Rovné vodicí čáry stromu (místo zaoblených)
+    type: class-toggle
+    default: false
+  -
+    id: inlay-hide-nav-buttons
+    title: Skrýt tlačítka nad stromem, dokud na ně nenajedeš
+    type: class-toggle
+    default: false
+
+  -
+    id: inlay-h-glass
+    title: Průsvitné okno
+    description: Funguje jen se zapnutým Settings → Appearance → Translucent window. Rozmazání pozadí obstarává macOS – jeho sílu nastavit nejde, tady se ladí vrstva nad ním.
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: inlay-glass-opacity
+    title: Neprůhlednost shellu
+    description: 0 % = úplně průhledný, 100 % = plná barva.
+    type: variable-number-slider
+    default: 45
+    min: 0
+    max: 100
+    step: 1
+    format: '%'
+  -
+    id: inlay-glass-frost
+    title: Zamlžení (frost)
+    description: Kolik se barva shellu přimíchá do bílé (ve tmavém režimu do černé).
+    type: variable-number-slider
+    default: 0
+    min: 0
+    max: 100
+    step: 1
+    format: '%'
+  -
+    id: inlay-glass-frost-color
+    title: Barva zamlžení
+    type: variable-themed-color
+    format: hex
+    default-light: '#ffffff'
+    default-dark: '#000000'
+  -
+    id: inlay-glass-grain
+    title: Zrnitost
+    description: Jemný šum přes sklo – dělá ho matnějším.
+    type: variable-number-slider
+    default: 0.05
+    min: 0
+    max: 0.3
+    step: 0.01
+  -
+    id: inlay-glass-card-opacity
+    title: Neprůhlednost karty
+    description: 100 % = karta je plná, nižší hodnoty nechají prosvítat i kartu.
+    type: variable-number-slider
+    default: 100
+    min: 40
+    max: 100
+    step: 1
+    format: '%'
+  -
+    id: inlay-glass-sidebar-opacity
+    title: Neprůhlednost levého panelu
+    type: variable-number-slider
+    default: 55
+    min: 0
+    max: 100
+    step: 1
+    format: '%'
+  -
+    id: inlay-h-header
+    title: Skleněná hlavička poznámky
+    description: Lišta s cestou a názvem souboru nad poznámkou. Text pod ní při scrollování projíždí rozmazaný. Zamlžení a zrnitost bere ze sekce Průsvitné okno. Funguje i bez průsvitného okna.
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: inlay-solid-header
+    title: Vypnout skleněnou hlavičku
+    type: class-toggle
+    default: false
+  -
+    id: inlay-header-opacity
+    title: Neprůhlednost hlavičky
+    type: variable-number-slider
+    default: 70
+    min: 0
+    max: 100
+    step: 1
+    format: '%'
+  -
+    id: inlay-header-blur
+    title: Rozmazání pod hlavičkou
+    type: variable-number-slider
+    default: 16
+    min: 0
+    max: 40
+    step: 1
+    format: px
+  -
+    id: inlay-header-saturate
+    title: Sytost barev pod hlavičkou
+    type: variable-number-slider
+    default: 1.6
+    min: 1
+    max: 2.5
+    step: 0.1
+*/
+
+/* ==========================================================================
+   1. Tokens
+   ========================================================================== */
+
+body.theme-light {
+	/* Obsidian's own light palette: editor base-00, panels/title bar base-20 */
+	--inlay-accent: #7c4dde;
+	--inlay-accent-hover: #5f33c4;
+	--inlay-chrome: var(--color-base-20);
+	--inlay-card: var(--color-base-00);
+	--inlay-sidebar: var(--color-base-10);
+	--inlay-raised: var(--color-base-00);
+	--inlay-menu: var(--color-base-00);
+	--inlay-hover: color-mix(in oklch, var(--mono-100) 6.7%, transparent);
+	--inlay-active: color-mix(in oklch, var(--mono-100) 10%, transparent);
+	--inlay-hover-chrome: color-mix(in oklch, var(--mono-100) 6.7%, transparent);
+	--inlay-active-chrome: color-mix(in oklch, var(--mono-100) 10%, transparent);
+	--inlay-segment: color-mix(in oklch, var(--mono-100) 5%, transparent);
+	--inlay-border: var(--color-base-30);
+	--inlay-divider: var(--color-base-35);
+	--inlay-guide: color-mix(in oklch, var(--mono-100) 12%, transparent);
+	--inlay-card-shadow: 0 0 0 1px rgb(0 0 0 / 6%), 0 1px 2px rgb(0 0 0 / 4%), 0 4px 16px rgb(0 0 0 / 7%);
+	--inlay-raise: 0 0 0 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%);
+	--inlay-float: 0 0 0 1px rgb(0 0 0 / 6%), 0 2px 8px rgb(0 0 0 / 6%);
+	--inlay-pop: 0 0 0 1px rgb(0 0 0 / 7%), 0 10px 28px rgb(0 0 0 / 12%), 0 2px 6px rgb(0 0 0 / 5%);
+	--inlay-modal-shadow: 0 0 0 1px rgb(0 0 0 / 6%), 0 24px 64px rgb(0 0 0 / 18%);
+}
+
+body.theme-dark {
+	/* Obsidian's own dark palette: editor base-00, panels/title bar base-20 */
+	--inlay-accent: #a58bf2;
+	--inlay-accent-hover: #bba6f6;
+	--inlay-chrome: var(--color-base-20);
+	--inlay-card: var(--color-base-00);
+	--inlay-sidebar: var(--color-base-10);
+	--inlay-raised: var(--color-base-00);
+	--inlay-menu: var(--color-base-20);
+	--inlay-hover: color-mix(in oklch, var(--mono-100) 6.7%, transparent);
+	--inlay-active: color-mix(in oklch, var(--mono-100) 10%, transparent);
+	--inlay-hover-chrome: color-mix(in oklch, var(--mono-100) 6.7%, transparent);
+	--inlay-active-chrome: color-mix(in oklch, var(--mono-100) 10%, transparent);
+	--inlay-segment: color-mix(in oklch, var(--mono-100) 5%, transparent);
+	--inlay-border: var(--color-base-30);
+	--inlay-divider: var(--color-base-35);
+	--inlay-guide: color-mix(in oklch, var(--mono-100) 12%, transparent);
+	--inlay-card-shadow: 0 0 0 1px rgb(0 0 0 / 35%), 0 4px 16px rgb(0 0 0 / 35%);
+	--inlay-raise: 0 0 0 1px rgb(255 255 255 / 6%), 0 1px 2px rgb(0 0 0 / 30%);
+	--inlay-float: 0 0 0 1px rgb(255 255 255 / 7%), 0 4px 12px rgb(0 0 0 / 35%);
+	--inlay-pop: 0 0 0 1px rgb(255 255 255 / 8%), 0 16px 40px rgb(0 0 0 / 50%);
+	--inlay-modal-shadow: 0 0 0 1px rgb(255 255 255 / 7%), 0 24px 64px rgb(0 0 0 / 60%);
+}
+
+body {
+	--inlay-gap: 8px;
+	--inlay-card-radius: 12px;
+	--inlay-glass-opacity: 45%;
+	--inlay-glass-frost: 0%;
+	--inlay-glass-grain: 0.05;
+	--inlay-glass-card-opacity: 100%;
+	--inlay-glass-sidebar-opacity: 55%;
+	--inlay-header-opacity: 70%;
+	--inlay-header-blur: 16px;
+	--inlay-header-saturate: 1.6;
+}
+
+body.theme-light {
+	--inlay-glass-frost-color: #fff;
+}
+
+body.theme-dark {
+	--inlay-glass-frost-color: #000;
+}
+
+/* ==========================================================================
+   2. Obsidian variables – colour only
+   ========================================================================== */
+
+body.theme-light,
+body.theme-dark {
+	--background-primary: var(--inlay-card);
+	--background-secondary: var(--inlay-sidebar);
+	--background-secondary-alt: var(--inlay-chrome);
+	--background-modifier-hover: var(--inlay-hover);
+	--background-modifier-active-hover: var(--inlay-active);
+	--background-modifier-border: var(--inlay-border);
+	--background-modifier-border-hover: var(--inlay-divider);
+	--divider-color: var(--inlay-border);
+	--titlebar-background: var(--inlay-chrome);
+	--titlebar-background-focused: var(--inlay-chrome);
+	--titlebar-border-width: 0;
+	--ribbon-background: var(--inlay-chrome);
+	--ribbon-background-collapsed: var(--inlay-chrome);
+	--tab-container-background: var(--inlay-chrome);
+	--sidebar-tab-container-background: var(--inlay-chrome);
+	--tab-background-active: var(--inlay-raised);
+	--tab-outline-width: 0px;
+	--tab-outline-color: transparent;
+	--tab-divider-color: transparent;
+	--tab-curve: 0px;
+	--file-header-border: none;
+	--nav-item-background-hover: var(--inlay-hover);
+	--nav-item-background-active: var(--inlay-active);
+	--nav-indentation-guide-color: var(--inlay-guide);
+	--modal-border-width: 0;
+	--modal-shadow: var(--inlay-modal-shadow);
+	--prompt-border-width: 0;
+	--menu-border-width: 0;
+	--menu-shadow: var(--inlay-pop);
+	--menu-background: var(--inlay-menu);
+	--suggestion-background: var(--inlay-menu);
+	--background-modifier-cover: rgb(20 20 18 / 18%);
+}
+
+body.inlay-theme-accent {
+	--color-accent: var(--inlay-accent);
+	--color-accent-1: var(--inlay-accent-hover);
+	--color-accent-2: var(--inlay-accent-hover);
+	--interactive-accent: var(--inlay-accent);
+	--interactive-accent-hover: var(--inlay-accent-hover);
+}
+
+/* ==========================================================================
+   3. Window: shell + one floating card
+   ========================================================================== */
+
+.app-container,
+.horizontal-main-container,
+.workspace {
+	background-color: var(--inlay-chrome);
+}
+
+body:not(.inlay-flat, .is-mobile) .workspace {
+	position: relative;
+	padding-bottom: var(--inlay-gap);
+}
+
+/* the gap right of the card is fixed to the editor, so toggling the right
+   sidebar never shifts the layout */
+body:not(.inlay-flat, .is-mobile) .workspace > .mod-root {
+	margin-inline-end: var(--inlay-gap);
+}
+
+/* the title-bar row is always shell */
+.workspace-split.mod-sidedock,
+.workspace-split.mod-sidedock > .workspace-tabs,
+.workspace-split.mod-root,
+.workspace-split.mod-root > .workspace-tabs,
+.workspace-split.mod-root > .workspace-split > .workspace-tabs,
+.workspace .workspace-tab-header-container,
+.workspace .mod-sidedock .workspace-tab-header-container,
+.workspace .sidebar-toggle-button {
+	background-color: var(--inlay-chrome) !important;
+	border: none;
+}
+
+/* card surfaces */
+.mod-root .workspace-tab-container,
+.mod-root .workspace-tabs .workspace-leaf,
+.workspace-split.mod-root .view-content {
+	background-color: var(--inlay-card);
+}
+
+.mod-primary-split .workspace-tab-container,
+.mod-primary-split .workspace-leaf,
+.mod-primary-split .view-content {
+	background-color: var(--inlay-sidebar);
+}
+
+/* a second tab group in the left sidebar stays inside the card */
+.workspace .mod-primary-split > .workspace-tabs:not(.mod-top) > .workspace-tab-header-container {
+	background-color: var(--inlay-sidebar) !important;
+	border-top: 1px solid var(--inlay-border);
+}
+
+/* right sidebar rests on the shell, outside the card – like the ribbon */
+.mod-secondary-split {
+	--background-secondary: var(--inlay-chrome);
+	--background-modifier-hover: var(--inlay-hover-chrome);
+	--background-modifier-active-hover: var(--inlay-active-chrome);
+	--nav-item-background-hover: var(--inlay-hover-chrome);
+	--nav-item-background-active: var(--inlay-active-chrome);
+}
+
+.mod-secondary-split .workspace-tab-container,
+.mod-secondary-split .workspace-leaf,
+.mod-secondary-split .view-content {
+	background-color: var(--inlay-chrome);
+}
+
+.workspace .mod-secondary-split > .workspace-tabs:not(.mod-top) > .workspace-tab-header-container {
+	border-top: 1px solid var(--inlay-divider);
+}
+
+body:not(.inlay-flat, .is-mobile) .workspace > .mod-secondary-split {
+	margin-bottom: calc(-1 * var(--inlay-gap));
+}
+
+/* seams */
+.workspace-split.mod-primary-split > .workspace-leaf-resize-handle,
+.workspace-split.mod-secondary-split > .workspace-leaf-resize-handle {
+	top: var(--header-height);
+	height: auto;
+}
+
+.workspace-split.mod-primary-split > .workspace-leaf-resize-handle {
+	border-color: var(--inlay-border);
+}
+
+.workspace-split.mod-secondary-split > .workspace-leaf-resize-handle {
+	border-color: transparent;
+}
+
+/* card shadow – one overlay following the card's outline */
+body:not(.inlay-hide-ring, .inlay-flat, .is-mobile) .workspace::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	top: var(--header-height);
+	bottom: var(--inlay-gap);
+	inset-inline: var(--ribbon-width) var(--inlay-gap);
+	border-radius: var(--inlay-card-radius);
+	box-shadow: var(--inlay-card-shadow);
+	z-index: 30;
+	will-change: transform;
+}
+
+body:not(.inlay-hide-ring, .inlay-flat, .is-mobile, .show-ribbon) .workspace::after {
+	inset-inline-start: 0;
+}
+
+.workspace > .workspace-split.mod-root {
+	anchor-name: --inlay-card-end;
+}
+
+@supports (anchor-name: --a) {
+	body:not(.inlay-hide-ring, .inlay-flat, .is-mobile, .mod-rtl) .workspace::after {
+		inset-inline-end: auto;
+		right: anchor(--inlay-card-end right);
+	}
+}
+
+/* rounded card corners */
+body:not(.inlay-flat, .is-mobile) {
+	& .mod-primary-split > .workspace-tabs.mod-top > .workspace-tab-container {
+		border-start-start-radius: var(--inlay-card-radius);
+		overflow: hidden;
+	}
+
+	& .mod-primary-split .workspace-sidedock-vault-profile {
+		border-end-start-radius: var(--inlay-card-radius);
+	}
+
+	& .mod-primary-split:not(:has(.workspace-sidedock-vault-profile)) > .workspace-tabs:not(:has(~ .workspace-tabs)) > .workspace-tab-container {
+		border-end-start-radius: var(--inlay-card-radius);
+		overflow: hidden;
+	}
+
+	& .workspace-split.mod-root {
+		overflow: hidden;
+		border-end-end-radius: var(--inlay-card-radius);
+	}
+
+	& .mod-root > .workspace-tabs:not(:has(~ .workspace-tabs, ~ .workspace-split)) > .workspace-tab-container,
+	& .mod-root > .workspace-split:not(:has(~ .workspace-tabs, ~ .workspace-split)) > .workspace-tabs.mod-top > .workspace-tab-container {
+		border-start-end-radius: var(--inlay-card-radius);
+		overflow: hidden;
+	}
+
+	& .workspace:not(.is-left-sidedock-open) .mod-root {
+		border-end-start-radius: var(--inlay-card-radius);
+	}
+
+	& .workspace:not(.is-left-sidedock-open) .mod-root .workspace-tabs.mod-top-left-space > .workspace-tab-container {
+		border-start-start-radius: var(--inlay-card-radius);
+	}
+}
+
+/* ==========================================================================
+   4. Ribbon
+   ========================================================================== */
+
+.workspace-ribbon.mod-primary,
+.workspace-ribbon.mod-primary.is-collapsed,
+.workspace-ribbon.is-collapsed {
+	border: none;
+	background-color: var(--inlay-chrome);
+}
+
+.workspace-ribbon.mod-primary::before {
+	border-bottom: none;
+}
+
+.workspace-ribbon .side-dock-ribbon-action:hover,
+.workspace-ribbon .side-dock-settings .clickable-icon:hover {
+	background-color: var(--inlay-hover-chrome);
+}
+
+.workspace-ribbon .side-dock-ribbon-action.is-active,
+.workspace-ribbon .side-dock-ribbon-action.has-active-menu {
+	background-color: var(--inlay-active-chrome);
+}
+
+/* ==========================================================================
+   5. Tabs
+   ========================================================================== */
+
+/* main tabs: the active one is a white pill on the shell */
+.workspace .mod-root .workspace-tab-header::before,
+.workspace .mod-root .workspace-tab-header::after,
+.workspace .mod-root .workspace-tab-header-inner::after {
+	display: none !important;
+}
+
+.workspace .mod-root .workspace-tab-header.is-active {
+	background-color: var(--inlay-raised);
+	box-shadow: var(--inlay-raise);
+}
+
+.workspace .mod-root .workspace-tab-header .workspace-tab-header-inner {
+	background: transparent;
+}
+
+.workspace .mod-root .workspace-tab-header:not(.is-active):hover {
+	background-color: var(--inlay-hover-chrome);
+}
+
+body.inlay-tab-close-hover .mod-root .workspace-tab-header:not(:hover) .workspace-tab-header-inner-close-button {
+	opacity: 0;
+}
+
+/* buttons in the title bar hover against the shell */
+.workspace-tab-header-new-tab .clickable-icon:hover,
+.workspace-tab-header-tab-list .clickable-icon:hover,
+.sidebar-toggle-button .clickable-icon:hover,
+.mod-sidedock .workspace-tab-header-container .workspace-tab-header:hover {
+	background-color: var(--inlay-hover-chrome);
+}
+
+.mod-primary-split .workspace-tab-header-container .workspace-tab-header.is-active,
+.mod-secondary-split .workspace-tab-header-container .workspace-tab-header.is-active {
+	background-color: var(--inlay-active-chrome);
+	box-shadow: none;
+}
+
+/* right sidebar tabs as a segmented control */
+body:not(.inlay-plain-right-tabs) .mod-secondary-split > .workspace-tabs.mod-top .workspace-tab-header-container {
+	align-items: center;
+}
+
+/* Obsidian pads sidebar tabs 1px top / 7px bottom – even it out so icons sit centred */
+body:not(.inlay-plain-right-tabs) .mod-secondary-split > .workspace-tabs.mod-top .workspace-tab-header-container-inner {
+	background-color: var(--inlay-segment);
+	border-radius: var(--radius-m);
+	margin: 0;
+	padding: 3px;
+	gap: 2px;
+	align-items: center;
+	align-self: center;
+	height: auto;
+}
+
+body:not(.inlay-plain-right-tabs) .mod-secondary-split > .workspace-tabs.mod-top .workspace-tab-header {
+	margin: 0;
+	align-self: center;
+}
+
+body:not(.inlay-plain-right-tabs) .mod-secondary-split > .workspace-tabs.mod-top .workspace-tab-header-inner {
+	justify-content: center;
+	align-items: center;
+}
+
+body:not(.inlay-plain-right-tabs) .mod-secondary-split > .workspace-tabs.mod-top .workspace-tab-header.is-active {
+	background-color: var(--inlay-raised);
+	box-shadow: 0 1px 2px rgb(0 0 0 / 8%), 0 0 0 0.5px rgb(0 0 0 / 4%);
+}
+
+/* ==========================================================================
+   6. Sidebars
+   ========================================================================== */
+
+body.inlay-hide-nav-buttons .nav-header {
+	opacity: 0;
+	transition: opacity 150ms ease;
+}
+
+body.inlay-hide-nav-buttons .workspace-leaf:hover .nav-header {
+	opacity: 1;
+}
+
+.tree-item-self.is-selected,
+.tree-item-self.is-being-dragged-over {
+	background-color: color-mix(in srgb, var(--interactive-accent) 12%, transparent);
+}
+
+/* curved "└" connectors – line and curve share one origin */
+body:not(.inlay-straight-guides) .nav-files-container .tree-item-children {
+	border-inline-start-color: transparent !important;
+}
+
+body:not(.inlay-straight-guides) .nav-files-container .tree-item-children > .tree-item {
+	position: relative;
+}
+
+body:not(.inlay-straight-guides) .nav-files-container .tree-item-children > .tree-item::before,
+body:not(.inlay-straight-guides) .nav-files-container .tree-item-children > .tree-item::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	inset-inline-start: calc(-1 * var(--nav-item-children-padding-start) - var(--nav-indentation-guide-width));
+	box-sizing: border-box;
+	border-inline-start: var(--nav-indentation-guide-width) solid var(--inlay-guide);
+}
+
+/* curve ends at the middle of the row (default row = padding + one line) */
+body:not(.inlay-straight-guides) .nav-files-container .tree-item-children > .tree-item::after {
+	top: 0;
+	height: calc(var(--size-4-1) + var(--nav-item-size) * var(--line-height-tight) / 2 + 1px);
+	width: 8px;
+	border-bottom: var(--nav-indentation-guide-width) solid var(--inlay-guide);
+	border-end-start-radius: 6px;
+}
+
+body:not(.inlay-straight-guides) .nav-files-container .tree-item-children > .tree-item:not(:last-child)::before {
+	top: 0;
+	bottom: 0;
+}
+
+body:not(.inlay-straight-guides) .nav-files-container .tree-item-children > .tree-item:last-child::before {
+	content: none;
+}
+
+/* vault switcher sits inside the card */
+body:not(.is-mobile) .workspace .workspace-split.mod-primary-split .workspace-sidedock-vault-profile {
+	border-top: none;
+	background-color: var(--inlay-sidebar) !important;
+}
+
+.search-result-file-matches {
+	background-color: var(--inlay-raised);
+	box-shadow: var(--inlay-raise);
+	border-radius: var(--radius-m);
+	overflow: hidden;
+}
+
+.mod-secondary-split .search-input-container input {
+	background-color: var(--inlay-raised);
+}
+
+/* ==========================================================================
+   7. View header
+   ========================================================================== */
+
+.workspace-leaf-content .view-header {
+	background-color: transparent;
+	border-bottom: none;
+}
+
+.view-header-breadcrumb,
+.view-header-title-parent {
+	color: var(--text-faint);
+}
+
+/* ==========================================================================
+   9. Empty states
+   ========================================================================== */
+
+.empty-state-action {
+	border-radius: var(--radius-m);
+}
+
+.empty-state-action:hover {
+	background-color: var(--inlay-hover);
+}
+
+/* ==========================================================================
+   10. Controls
+   ========================================================================== */
+
+.checkbox-container {
+	background-color: var(--inlay-divider);
+}
+
+.checkbox-container.is-enabled {
+	background-color: var(--interactive-accent);
+}
+
+/* ==========================================================================
+   11. Modals & settings
+   ========================================================================== */
+
+.modal {
+	border: none;
+	box-shadow: var(--inlay-modal-shadow);
+}
+
+.vertical-tab-header {
+	background-color: var(--inlay-sidebar);
+	border-inline-end: 1px solid var(--inlay-border);
+}
+
+.vertical-tab-nav-item:hover {
+	background-color: var(--inlay-hover);
+}
+
+.vertical-tab-nav-item.is-active {
+	background-color: var(--inlay-active);
+	color: var(--text-normal);
+}
+
+.vertical-tab-content-container {
+	background-color: var(--inlay-card);
+}
+
+.community-item {
+	border: none;
+	background-color: var(--inlay-raised);
+	box-shadow: var(--inlay-raise);
+}
+
+.community-item:hover {
+	box-shadow: var(--inlay-float);
+}
+
+.community-item.is-selected {
+	box-shadow: 0 0 0 2px var(--interactive-accent);
+}
+
+/* ==========================================================================
+   12. Command palette, suggestions, menus, tooltips, notices, popovers
+   ========================================================================== */
+
+.prompt {
+	border: none;
+	box-shadow: var(--inlay-modal-shadow);
+	overflow: hidden;
+}
+
+.suggestion-item.is-selected {
+	background-color: var(--inlay-active);
+}
+
+.prompt-instructions {
+	border-top: 1px solid var(--inlay-border);
+}
+
+.suggestion-container {
+	border: none;
+	box-shadow: var(--inlay-pop);
+	overflow: hidden;
+}
+
+.menu {
+	border: none;
+}
+
+.menu-item.selected:not(.is-disabled, .is-label) {
+	background-color: var(--inlay-hover);
+}
+
+.notice {
+	background-color: var(--inlay-menu);
+	color: var(--text-normal);
+	box-shadow: var(--inlay-pop);
+}
+
+.popover,
+.popover.hover-popover {
+	border: none;
+	box-shadow: var(--inlay-pop);
+}
+
+/* ==========================================================================
+   13. Canvas & graph controls
+   ========================================================================== */
+
+.canvas-controls .canvas-control-group,
+.canvas-card-menu,
+.canvas-menu,
+.graph-controls {
+	border: none;
+	background-color: var(--inlay-menu);
+	box-shadow: var(--inlay-float);
+}
+
+/* ==========================================================================
+   14. Flat mode & mobile
+   ========================================================================== */
+
+body.inlay-flat .workspace-tab-container,
+body.inlay-flat .workspace-split.mod-root {
+	border-radius: 0;
+}
+
+body.is-mobile {
+	--inlay-gap: 0px;
+}
+
+/* ==========================================================================
+   15. Translucent window (glass)
+   ========================================================================== */
+
+/* one tinted layer over the OS blur; everything that is "shell" above it is clear,
+   so stacked layers don't compound the tint */
+body.is-translucent:not(.is-fullscreen, .is-popout-window) {
+	--inlay-glass: color-mix(in srgb,
+		color-mix(in srgb, var(--inlay-chrome), var(--inlay-glass-frost-color) var(--inlay-glass-frost))
+		var(--inlay-glass-opacity), transparent);
+	--titlebar-background: transparent;
+	--titlebar-background-focused: transparent;
+	--ribbon-background: transparent;
+	--ribbon-background-collapsed: transparent;
+	--tab-container-background: transparent;
+	--sidebar-tab-container-background: transparent;
+}
+
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .app-container {
+	background-color: var(--inlay-glass) !important;
+	isolation: isolate;
+}
+
+/* frosted grain */
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .app-container::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	opacity: var(--inlay-glass-grain);
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+body.is-translucent:not(.is-fullscreen, .is-popout-window) :is(
+	.horizontal-main-container,
+	.workspace,
+	.titlebar,
+	.workspace-ribbon.mod-primary,
+	.mod-secondary-split .workspace-tab-container,
+	.mod-secondary-split .workspace-leaf,
+	.mod-secondary-split .view-content
+) {
+	background-color: transparent !important;
+}
+
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .workspace-ribbon.mod-primary::before {
+	background-color: transparent !important;
+}
+
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .workspace :is(
+	.workspace-split.mod-sidedock,
+	.workspace-split.mod-sidedock > .workspace-tabs,
+	.workspace-split.mod-root,
+	.workspace-split.mod-root > .workspace-tabs,
+	.workspace-split.mod-root > .workspace-split > .workspace-tabs,
+	.workspace-tab-header-container,
+	.mod-sidedock .workspace-tab-header-container,
+	.sidebar-toggle-button
+) {
+	background-color: transparent !important;
+}
+
+/* the card (and the left sidebar inside it) stay solid unless dialled down */
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .mod-root .workspace-tab-container {
+	background-color: color-mix(in srgb, var(--inlay-card) var(--inlay-glass-card-opacity), transparent);
+}
+
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .workspace-split.mod-root :is(.workspace-leaf, .view-content) {
+	background-color: transparent;
+}
+
+/* Obsidian clears the vault profile with !important in translucent mode – match the sidebar again */
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .workspace .mod-primary-split > .workspace-tabs > .workspace-tab-container,
+body.is-translucent:not(.is-fullscreen, .is-popout-window, .is-mobile) .workspace .workspace-split.mod-primary-split .workspace-sidedock-vault-profile {
+	background-color: color-mix(in srgb, var(--inlay-sidebar) var(--inlay-glass-sidebar-opacity), transparent) !important;
+}
+
+body.is-translucent:not(.is-fullscreen, .is-popout-window) .mod-primary-split :is(.workspace-leaf, .view-content) {
+	background-color: transparent;
+}
+
+/* ==========================================================================
+   16. Glass note header
+   ========================================================================== */
+
+/* the header floats over the note; the note scrolls underneath it */
+body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 3;
+	isolation: isolate;
+	background-color: color-mix(in srgb,
+		color-mix(in srgb, var(--inlay-card), var(--inlay-glass-frost-color) var(--inlay-glass-frost))
+		var(--inlay-header-opacity), transparent) !important;
+	backdrop-filter: blur(var(--inlay-header-blur)) saturate(var(--inlay-header-saturate));
+}
+
+/* same frosted grain as the shell */
+body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] > .view-header::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	opacity: var(--inlay-glass-grain);
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* keep the first line clear of the header – only the start of the scroll area moves */
+body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content > .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller,
+body:not(.inlay-solid-header) .mod-root .workspace-leaf-content[data-type="markdown"] .view-content .markdown-reading-view > .markdown-preview-view {
+	padding-top: calc(var(--file-margins-y) + var(--header-height));
+	scroll-padding-top: var(--header-height);
+}
+
+/* ==========================================================================
+   17. Pop-out windows
+   ========================================================================== */
+
+body.is-popout-window .titlebar,
+body.is-popout-window .app-container {
+	background-color: var(--inlay-chrome) !important;
+}
+
+body.is-popout-window .titlebar-text {
+	color: var(--text-muted);
+}
