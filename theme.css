@@ -307,11 +307,6 @@ body.theme-dark {
 	--ribbon-background-collapsed: var(--inlay-chrome);
 	--tab-container-background: var(--inlay-chrome);
 	--sidebar-tab-container-background: var(--inlay-chrome);
-	--tab-background-active: var(--inlay-raised);
-	--tab-outline-width: 0px;
-	--tab-outline-color: transparent;
-	--tab-divider-color: transparent;
-	--tab-curve: 0px;
 	--file-header-border: none;
 	--nav-item-background-hover: var(--inlay-hover);
 	--nav-item-background-active: var(--inlay-active);
@@ -518,26 +513,6 @@ body:not(.inlay-flat, .is-mobile) {
 /* ==========================================================================
    5. Tabs
    ========================================================================== */
-
-/* main tabs: the active one is a white pill on the shell */
-.workspace .mod-root .workspace-tab-header::before,
-.workspace .mod-root .workspace-tab-header::after,
-.workspace .mod-root .workspace-tab-header-inner::after {
-	display: none !important;
-}
-
-.workspace .mod-root .workspace-tab-header.is-active {
-	background-color: var(--inlay-raised);
-	box-shadow: var(--inlay-raise);
-}
-
-.workspace .mod-root .workspace-tab-header .workspace-tab-header-inner {
-	background: transparent;
-}
-
-.workspace .mod-root .workspace-tab-header:not(.is-active):hover {
-	background-color: var(--inlay-hover-chrome);
-}
 
 body.inlay-tab-close-hover .mod-root .workspace-tab-header:not(:hover) .workspace-tab-header-inner-close-button {
 	opacity: 0;

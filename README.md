@@ -8,7 +8,6 @@ An Obsidian theme where the workspace is a single card **inlaid** in a neutral s
 
 - The editor and the left sidebar sit on one floating card with a soft shadow.
 - The ribbon, title bar and right sidebar rest on the shell around it.
-- Active tabs are raised pills.
 - File explorer guides curve into each row.
 - Optional **glass**: a translucent shell over the OS blur and a frosted note header that text scrolls beneath.
 
@@ -39,11 +38,13 @@ npm install
 npm run lint
 ```
 
-To work on the theme live, symlink the repository into a vault:
+To try changes in your vaults, list their paths (one per line) in `vaults.local.txt` and run:
 
 ```bash
-ln -s ~/Projects/obsidian-inlay "<vault>/.obsidian/themes/Inlay"
+npm run sync
 ```
+
+This copies `manifest.json` and `theme.css` into each vault and into `showcase-vault/`. Obsidian doesn't pick up edits made through symlinks, so vaults get real copies.
 
 ### Releasing
 
@@ -51,7 +52,7 @@ ln -s ~/Projects/obsidian-inlay "<vault>/.obsidian/themes/Inlay"
 2. Commit, then push a tag that matches the version, for example `git tag 0.2.0 && git push --tags`.
 3. The release workflow creates a draft GitHub release with `manifest.json` and `theme.css`.
 
-`screenshots/screenshot.png` (512×288) is the community directory thumbnail. To retake screenshots, open `showcase-vault/` as a vault. It already uses Inlay through a symlink to this repository.
+`screenshots/screenshot.png` (512×288) is the community directory thumbnail. To retake screenshots, open `showcase-vault/` as a vault. Run `npm run sync` first so it has the current theme.
 
 ## License
 

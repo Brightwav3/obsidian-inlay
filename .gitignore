@@ -18,4 +18,6 @@ node_modules
 showcase-vault/.obsidian/*
 !showcase-vault/.obsidian/appearance.json
 !showcase-vault/.obsidian/app.json
-!showcase-vault/.obsidian/themes
+
+# Machine-specific vault list for npm run sync
+vaults.local.txt
