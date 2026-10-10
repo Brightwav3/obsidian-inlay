@@ -55,7 +55,9 @@ export const icons = [
 	{ ids: ['plus'], body: path('M12 5.5v13M5.5 12h13') },
 	{ ids: ['minus'], body: path('M5.5 12h13') },
 	{ ids: ['check'], body: path('M5.5 12.5l4.25 4.25L18.5 7.5') },
-	{ ids: ['chevron-down', 'right-triangle'], body: path('M7.5 10l4.5 4.5 4.5-4.5') },
+	{ ids: ['chevron-down'], body: path('M7.5 10l4.5 4.5 4.5-4.5') },
+	// the file tree's collapse arrow – Obsidian draws it wider than a chevron
+	{ ids: ['right-triangle'], body: path('M4.5 8.5l7.5 7.5 7.5-7.5') },
 	{ ids: ['chevron-up'], body: path('M7.5 14l4.5-4.5 4.5 4.5') },
 	{ ids: ['chevron-right'], body: path('M10 7.5l4.5 4.5-4.5 4.5') },
 	{ ids: ['chevron-left'], body: path('M14 7.5L9.5 12l4.5 4.5') },
@@ -146,7 +148,7 @@ export const icons = [
 	{ ids: ['archive'], body: box(3.5, 4.5, 17, 4.5, 1.5) + path('M5 9v8a2.5 2.5 0 0 0 2.5 2.5h9A2.5 2.5 0 0 0 19 17V9M10 13h4') },
 	{ ids: ['archive-x', 'package-x'], body: box(3.5, 4.5, 17, 4.5, 1.5) + path('M5 9v8a2.5 2.5 0 0 0 2.5 2.5h9A2.5 2.5 0 0 0 19 17V9M10 12.5l4 4M14 12.5l-4 4') },
 	{ ids: ['globe', 'globe-2'], body: ring() + path('M3.5 12h17M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5c-2.3-2.4-3.4-5.2-3.4-8.5S9.7 5.9 12 3.5z') },
-	{ ids: ['download-cloud', 'cloud-download'], body: path('M7 17.5a4.5 4.5 0 0 1-.6-8.96 6 6 0 0 1 11.6 1.46 3.5 3.5 0 0 1-.5 6.96M12 12v7.5M9.5 17l2.5 2.5 2.5-2.5') },
+	{ ids: ['download-cloud', 'cloud-download'], body: path('M7.5 17.5a4 4 0 0 1-.4-7.98 5.25 5.25 0 0 1 10.15 1.48 3.1 3.1 0 0 1-.25 6.5M12 12v7.5M9.5 17l2.5 2.5 2.5-2.5') },
 	{ ids: ['download'], body: path('M12 4.5v11M7.5 11l4.5 4.5 4.5-4.5M5 19.5h14') },
 	{ ids: ['save'], body: path('M5 7a2.5 2.5 0 0 1 2.5-2.5h8.5L19.5 8v9.5a2.5 2.5 0 0 1-2.5 2.5H7.5A2.5 2.5 0 0 1 5 17.5zM8.5 4.5v4h6v-4M8.5 20v-5.5h7V20') },
 	{ ids: ['clock'], body: ring() + path('M12 7.5V12l3 2') },
@@ -175,7 +177,7 @@ export const icons = [
 	{ ids: ['vault'], body: panel + ring(3) + dot(12, 12, 0.9) + path('M7.5 19.5v1.5M16.5 19.5v1.5') },
 	{ ids: ['paperclip'], body: path('M19 11.5l-7.2 7.2a4.7 4.7 0 0 1-6.65-6.65l7.6-7.6a3.1 3.1 0 0 1 4.4 4.4l-7.6 7.6a1.55 1.55 0 0 1-2.2-2.2l7-7') },
 	{ ids: ['mouse-pointer-click'], body: path('M9.5 9.5l4.6 10.5 1.55-4.45 4.35-1.55zM5.5 3.5V6M3.5 5.5H6M9.5 4.5L8 6M4.5 9.5L6 8') },
-	{ ids: ['github'], body: path('M15 20.5v-3.4a3 3 0 0 0-.85-2.3c2.8-.3 5.85-1.4 5.85-6.3a4.9 4.9 0 0 0-1.35-3.4 4.6 4.6 0 0 0-.1-3.4s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.45 1.4 5.35 1.7 5.35 1.7a4.6 4.6 0 0 0-.1 3.4A4.9 4.9 0 0 0 3.9 8.5c0 4.9 3 6 5.85 6.3a3 3 0 0 0-.85 2.3v3.4M9 18c-3 .9-3-1.5-4.5-2') },
+	{ ids: ['github'], body: `<g transform='translate(12 12) scale(.9) translate(-12 -11)'>` + path('M15 20.5v-3.4a3 3 0 0 0-.85-2.3c2.8-.3 5.85-1.4 5.85-6.3a4.9 4.9 0 0 0-1.35-3.4 4.6 4.6 0 0 0-.1-3.4s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.45 1.4 5.35 1.7 5.35 1.7a4.6 4.6 0 0 0-.1 3.4A4.9 4.9 0 0 0 3.9 8.5c0 4.9 3 6 5.85 6.3a3 3 0 0 0-.85 2.3v3.4M9 18c-3 .9-3-1.5-4.5-2') + '</g>' },
 
 	// files and folders
 	{ ids: ['file', 'file-empty'], body: doc },
