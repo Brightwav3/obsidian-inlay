@@ -92,7 +92,7 @@ npm install
 ### Releasing
 
 1. Bump `version` in `package.json` and run `npm run version`.
-2. Commit, tag the version and push it: `git tag 0.3.0 && git push --tags`.
+2. Commit, tag the version and push it: `git tag 0.3.1 && git push --tags`.
 3. The [release workflow](.github/workflows/release.yml) creates a draft release with `manifest.json` and `theme.css`. Review it, then publish.
 
 ## Credits
