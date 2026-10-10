@@ -447,7 +447,19 @@ body:not(.inlay-hide-ring, .inlay-flat, .is-mobile) .workspace::after {
 	border-radius: var(--inlay-card-radius);
 	box-shadow: var(--inlay-card-shadow);
 	z-index: 30;
-	clip-path: inset(0 -64px -64px -64px);
+
+	/* Let the corner stroke reach the tab divider one pixel above the card.
+	   Keep the straight top edge clipped so active tabs remain connected. */
+	clip-path: polygon(
+		-64px -1px,
+		var(--inlay-card-radius) -1px,
+		var(--inlay-card-radius) 0,
+		calc(100% - var(--inlay-card-radius)) 0,
+		calc(100% - var(--inlay-card-radius)) -1px,
+		calc(100% + 64px) -1px,
+		calc(100% + 64px) calc(100% + 64px),
+		-64px calc(100% + 64px)
+	);
 }
 
 body:not(.inlay-hide-ring, .inlay-flat, .is-mobile, .show-ribbon) .workspace::after {
