@@ -28,6 +28,7 @@ Most themes restyle everything. Inlay changes **one idea**: your notes sit on a 
 - **Obsidian's own palette.** Light and dark mode use the default colour scale, so plugins and snippets look the way they expect.
 - **Optional glass.** A translucent shell over the OS blur, and a frosted note header that text scrolls beneath.
 - **Details.** Curved file-tree guides, unified tab outline, pop-out windows with their own card.
+- **Optional Codex style.** A lighter icon set that replaces Obsidian's Lucide icons, Codex-like ribbon buttons, and the settings gear at the foot of the ribbon.
 - **Mobile.** Drawers sit on the shell and the open note is the card.
 
 ## Screenshots
@@ -56,7 +57,7 @@ Install [Style Settings](https://github.com/mgmeyers/obsidian-style-settings), t
 | --- | --- |
 | **Colours** | Theme or app accent · shell · card · left sidebar (light and dark) |
 | **Layout** | Flat mode · card gap · card radius · card shadow |
-| **Tabs & sidebars** | Close button on hover · curved or straight tree guides · auto-hide explorer buttons |
+| **Tabs & sidebars** | Close button on hover · curved or straight tree guides · auto-hide explorer buttons · Codex-style icons · Codex-style ribbon · settings in the ribbon |
 | **Translucent window** | Shell opacity · frost amount and colour · grain · card and sidebar opacity |
 | **Glass note header** | Opacity · blur · saturation |
 
@@ -83,6 +84,7 @@ npm install
 | --- | --- |
 | `npm run lint` | Checks `theme.css` against [`stylelint-config-obsidianmd`](https://github.com/obsidianmd/stylelint-config), the rules used in theme review |
 | `npm run sync` | Copies `manifest.json` and `theme.css` into `showcase-vault/` and every vault listed in `vaults.local.txt` (one path per line, git-ignored). Obsidian doesn't pick up edits made through symlinks, so vaults get real copies |
+| `npm run icons` | Builds the Codex-style icon set from `icons/codex-icons.mjs` into `theme.css` and writes `icons/preview.html`, a sheet of every glyph |
 | `npm run version` | Writes the `package.json` version into `manifest.json` and `versions.json` |
 
 `showcase-vault/` is a small demo vault for trying the theme and taking screenshots. Open it as a vault after `npm run sync`.
@@ -90,7 +92,7 @@ npm install
 ### Releasing
 
 1. Bump `version` in `package.json` and run `npm run version`.
-2. Commit, tag the version and push it: `git tag 0.2.0 && git push --tags`.
+2. Commit, tag the version and push it: `git tag 0.3.0 && git push --tags`.
 3. The [release workflow](.github/workflows/release.yml) creates a draft release with `manifest.json` and `theme.css`. Review it, then publish.
 
 ## Credits
