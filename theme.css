@@ -467,6 +467,29 @@ body:not(.inlay-hide-ring, .inlay-flat, .is-mobile, .show-ribbon) .workspace::af
 
 /* rounded card corners */
 body:not(.inlay-flat, .is-mobile) {
+	/* The tab-row border sits outside the rounded content's clip. Inset only
+	   its painted ends, keeping the tab outline and resize targets intact. */
+	& :is(.mod-primary-split, .mod-root) .workspace-tabs.mod-top > .workspace-tab-header-container {
+		--inlay-outline-start: 0px;
+		--inlay-outline-end: 0px;
+
+		border-image: linear-gradient(to right,
+			transparent var(--inlay-outline-start),
+			var(--tab-outline-color) var(--inlay-outline-start),
+			var(--tab-outline-color) calc(100% - var(--inlay-outline-end)),
+			transparent calc(100% - var(--inlay-outline-end))) 1;
+	}
+
+	& .mod-primary-split > .workspace-tabs.mod-top > .workspace-tab-header-container,
+	& .workspace:not(.is-left-sidedock-open) .mod-root .workspace-tabs.mod-top-left-space > .workspace-tab-header-container {
+		--inlay-outline-start: var(--inlay-card-radius);
+	}
+
+	& .mod-root > .workspace-tabs:not(:has(~ .workspace-tabs, ~ .workspace-split)) > .workspace-tab-header-container,
+	& .mod-root > .workspace-split:not(:has(~ .workspace-tabs, ~ .workspace-split)) > .workspace-tabs.mod-top > .workspace-tab-header-container {
+		--inlay-outline-end: var(--inlay-card-radius);
+	}
+
 	& .mod-primary-split > .workspace-tabs.mod-top > .workspace-tab-container {
 		border-start-start-radius: var(--inlay-card-radius);
 		overflow: hidden;
@@ -939,6 +962,11 @@ body.is-popout-window:not(.inlay-flat, .is-mobile) .mod-root .workspace-tabs.mod
 	border-start-start-radius: var(--inlay-card-radius);
 	border-start-end-radius: var(--inlay-card-radius);
 	overflow: hidden;
+}
+
+body.is-popout-window:not(.inlay-flat, .is-mobile) .mod-root .workspace-tabs.mod-top > .workspace-tab-header-container {
+	--inlay-outline-start: var(--inlay-card-radius);
+	--inlay-outline-end: var(--inlay-card-radius);
 }
 
 body.is-popout-window .titlebar,
