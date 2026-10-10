@@ -4,7 +4,8 @@
 	"scripts": {
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"lint": "stylelint theme.css",
-		"sync": "node scripts/sync.mjs"
+		"sync": "node scripts/sync.mjs",
+		"icons": "node scripts/build-icons.mjs"
 	},
 	"devDependencies": {
 		"stylelint": "^17.0.0",
