@@ -112,6 +112,18 @@ settings:
     title: Skrýt tlačítka nad stromem, dokud na ně nenajedeš
     type: class-toggle
     default: false
+  -
+    id: inlay-codex-rail
+    title: Ribbon ve stylu Codexu
+    description: Vlastní ikony pro vestavěné akce, větší zaoblená tlačítka a zvýraznění otevřeného grafu, canvasu nebo base.
+    type: class-toggle
+    default: false
+  -
+    id: inlay-rail-settings
+    title: Nastavení dole v ribbonu
+    description: Ozubené kolo se přesune z patičky levého panelu na spodek ribbonu – je vidět i se sbaleným panelem.
+    type: class-toggle
+    default: false
 
   -
     id: inlay-h-glass
@@ -559,6 +571,105 @@ body:not(.inlay-flat, .is-mobile) {
 .workspace-ribbon .side-dock-ribbon-action.is-active,
 .workspace-ribbon .side-dock-ribbon-action.has-active-menu {
 	background-color: var(--inlay-active-chrome);
+}
+
+/* Codex-style rail: icons drawn for Obsidian's built-in actions, matched by their Lucide class so the labels' language does not matter */
+body.inlay-codex-rail {
+	--inlay-rail-icon-file-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='6.25'/%3E%3Cpath d='m15.75 15.75 4.25 4.25'/%3E%3C/svg%3E");
+	--inlay-rail-icon-git-fork: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='7' cy='6.5' r='2.25'/%3E%3Ccircle cx='7' cy='17.5' r='2.25'/%3E%3Ccircle cx='17' cy='12' r='2.25'/%3E%3Cpath d='M7 8.75v6.5M9.1 7.6l5.85 3.25M9.1 16.4l5.85-3.25'/%3E%3C/svg%3E");
+	--inlay-rail-icon-layout-dashboard: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='7' height='7' rx='2'/%3E%3Crect x='13' y='4' width='7' height='7' rx='3.5'/%3E%3Crect x='4' y='13' width='7' height='7' rx='2'/%3E%3Crect x='13' y='13' width='7' height='7' rx='2'/%3E%3C/svg%3E");
+	--inlay-rail-icon-calendar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='5.5' width='16' height='14.5' rx='3.5'/%3E%3Cpath d='M4 10h16M8.5 3.5V7M15.5 3.5V7'/%3E%3C/svg%3E");
+	--inlay-rail-icon-files: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='8.5' y='3.75' width='11.5' height='13' rx='3'/%3E%3Cpath d='M5.25 7.75v9.5a3 3 0 0 0 3 3h7.5'/%3E%3C/svg%3E");
+	--inlay-rail-icon-terminal: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5.5 7.5 4.5 4.5-4.5 4.5M12.5 17h6'/%3E%3C/svg%3E");
+	--inlay-rail-icon-layout-list: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4.5' width='16' height='15' rx='3.5'/%3E%3Cpath d='M4 9.5h16M9.5 9.5v10'/%3E%3C/svg%3E");
+}
+
+body.inlay-codex-rail .workspace-ribbon.mod-primary .side-dock-actions {
+	gap: 8px;
+	padding-top: 4px;
+}
+
+body.inlay-codex-rail .workspace-ribbon .side-dock-ribbon-action,
+body.inlay-codex-rail .workspace-ribbon .side-dock-settings .clickable-icon {
+	--icon-size: 19px;
+	--icon-stroke: 1.6px;
+
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	justify-content: center;
+	border-radius: 9px;
+	color: var(--text-muted);
+}
+
+body.inlay-codex-rail .workspace-ribbon .side-dock-ribbon-action:hover,
+body.inlay-codex-rail .workspace-ribbon .side-dock-ribbon-action.has-active-menu {
+	color: var(--text-normal);
+}
+
+body.inlay-codex-rail .side-dock-ribbon-action:has(> svg:is(.lucide-file-search, .lucide-git-fork, .lucide-layout-dashboard, .lucide-calendar, .lucide-files, .lucide-terminal, .lucide-layout-list)) {
+	& > svg {
+		display: none;
+	}
+
+	&::before {
+		content: "";
+		width: var(--icon-size);
+		height: var(--icon-size);
+		background-color: currentcolor;
+		mask: var(--inlay-rail-icon) center / contain no-repeat;
+	}
+}
+
+body.inlay-codex-rail .side-dock-ribbon-action:has(> .lucide-file-search) { --inlay-rail-icon: var(--inlay-rail-icon-file-search); }
+body.inlay-codex-rail .side-dock-ribbon-action:has(> .lucide-git-fork) { --inlay-rail-icon: var(--inlay-rail-icon-git-fork); }
+body.inlay-codex-rail .side-dock-ribbon-action:has(> .lucide-layout-dashboard) { --inlay-rail-icon: var(--inlay-rail-icon-layout-dashboard); }
+body.inlay-codex-rail .side-dock-ribbon-action:has(> .lucide-calendar) { --inlay-rail-icon: var(--inlay-rail-icon-calendar); }
+body.inlay-codex-rail .side-dock-ribbon-action:has(> .lucide-files) { --inlay-rail-icon: var(--inlay-rail-icon-files); }
+body.inlay-codex-rail .side-dock-ribbon-action:has(> .lucide-terminal) { --inlay-rail-icon: var(--inlay-rail-icon-terminal); }
+body.inlay-codex-rail .side-dock-ribbon-action:has(> .lucide-layout-list) { --inlay-rail-icon: var(--inlay-rail-icon-layout-list); }
+
+/* the rail marks the view you are in, like Codex does */
+body.inlay-codex-rail:has(.workspace-leaf.mod-active > .workspace-leaf-content[data-type="graph"]) .side-dock-ribbon-action:has(> .lucide-git-fork),
+body.inlay-codex-rail:has(.workspace-leaf.mod-active > .workspace-leaf-content[data-type="canvas"]) .side-dock-ribbon-action:has(> .lucide-layout-dashboard),
+body.inlay-codex-rail:has(.workspace-leaf.mod-active > .workspace-leaf-content[data-type="bases"]) .side-dock-ribbon-action:has(> .lucide-layout-list) {
+	color: var(--text-normal);
+	background-color: var(--inlay-active-chrome);
+}
+
+/* settings move from the vault profile to the foot of the rail */
+body.inlay-rail-settings:not(.is-mobile) .workspace-drawer-vault-actions .clickable-icon:has(> .lucide-settings) {
+	--icon-size: 19px;
+	--icon-stroke: 1.6px;
+
+	position: fixed;
+	inset-inline-start: calc((var(--ribbon-width, 44px) - 32px) / 2);
+	bottom: 12px;
+	z-index: var(--layer-sidedock);
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	justify-content: center;
+	border-radius: 9px;
+	color: var(--text-muted);
+
+	&:hover {
+		color: var(--text-normal);
+		background-color: var(--inlay-hover-chrome);
+	}
+}
+
+/* a collapsed sidebar is display:none in Obsidian, which would take the settings button with it */
+body.inlay-rail-settings:not(.is-mobile) .workspace-split.mod-left-split.is-sidedock-collapsed {
+	display: flex !important;
+	width: 0 !important;
+	min-width: 0;
+	overflow: hidden;
+	visibility: hidden;
+
+	& .workspace-drawer-vault-actions .clickable-icon:has(> .lucide-settings) {
+		visibility: visible;
+	}
 }
 
 /* ==========================================================================
