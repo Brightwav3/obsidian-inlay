@@ -8,7 +8,7 @@
 		"icons": "node scripts/build-icons.mjs"
 	},
 	"devDependencies": {
-		"stylelint": "^17.0.0",
+		"stylelint": "^17.16.0",
 		"stylelint-config-obsidianmd": "^0.1.0"
 	},
 	"description": "Inlay \u2014 an Obsidian theme: the workspace as one card inlaid in a neutral shell.",
