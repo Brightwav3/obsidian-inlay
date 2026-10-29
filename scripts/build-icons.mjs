@@ -23,7 +23,9 @@ const OBSIDIAN_IDS = new Set(['help', 'right-triangle', 'links-coming-in', 'link
 const classesOf = (id) => OBSIDIAN_IDS.has(id) ? [id, `lucide-${id}`] : [`lucide-${id}`];
 
 const svg = (body) => `<svg xmlns='http://www.w3.org/2000/svg' viewBox='${VIEWBOX}' fill='none' stroke='#000' stroke-width='${+(STROKE / SCALE).toFixed(3)}' stroke-linecap='round' stroke-linejoin='round'>${body}</svg>`;
-const dataUri = (body) => `url("data:image/svg+xml,${encodeURIComponent(svg(body)).replace(/%20/g, ' ').replace(/%3D/g, '=').replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%2C/g, ',')}")`;
+// Only what would break the URL or the CSS string gets escaped (% # " and newlines); everything else stays
+// readable, which keeps the generated block small
+const dataUri = (body) => `url("data:image/svg+xml,${svg(body).replace(/[%#"\n]/g, encodeURIComponent)}")`;
 
 const seen = new Map();
 for (const icon of icons) {
